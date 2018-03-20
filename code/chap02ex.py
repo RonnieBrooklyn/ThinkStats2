@@ -21,7 +21,13 @@ def Mode(hist):
 
     returns: value from Hist
     """
-    return 0
+    max_mode = 0
+    max_val = None
+    for value, freq in hist.Items():
+        if freq >= max_mode:
+            max_val = value
+            max_mode = freq
+    return max_val
 
 
 def AllModes(hist):
@@ -31,8 +37,9 @@ def AllModes(hist):
 
     returns: iterator of value-freq pairs
     """
-    return []
-
+    c = hist.Items()
+    c.sort(key=lambda x: x[1], reverse=True)
+    return c
 
 def main(script):
     """Tests the functions in this module.
@@ -49,6 +56,7 @@ def main(script):
 
     # test AllModes
     modes = AllModes(hist)
+    print(modes)
     assert modes[0][1] == 4693, modes[0][1]
 
     for value, freq in modes[:5]:
